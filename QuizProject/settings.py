@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +28,11 @@ SECRET_KEY = 'django-insecure-ii+l*s7h%wu9zq)zij)i*_s&)3-#2wm+5$g+)nyaj*3ejjktf!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+# Add this at the bottom (needed for Render deployments):
+if os.environ.get('RENDER'):
+    import django_heroku
+    django_heroku.settings(locals())
 
 
 # Application definition
@@ -118,6 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
